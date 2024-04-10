@@ -5,13 +5,14 @@ import t1 from '@/assets/t1.png'
 import t2 from '@/assets/t2.png'
 import t3 from '@/assets/t3.png'
 import t4 from '@/assets/t4.png'
+import t5 from '@/assets/t5.png'
 
 import { useWindowWidth } from "@react-hook/window-size";
 import { useState, useEffect } from "react";
 
 export default function Home() {
     const turtles = [
-        t3,t4,t1,t2
+        t5, t3,t4,t1,t2
     ];
 
     function shuffle(array) {
@@ -34,12 +35,17 @@ export default function Home() {
 
     const speedVsPlace = {
         1: 1,
-        1.2: 2,
-        1.4: 3,
-        1.6: 4
+        1.15: 2,
+        1.3: 3,
+        1.45: 4,
+        1.6:5
     }
-    const [speeds, _] = useState(shuffle([1,1.2,1.4,1.6]));
-    const [turtleEase, setTurtleEase] = useState([[Math.random(), Math.random(),Math.random(),Math.random()],[Math.random(), Math.random(),Math.random(),Math.random()],[Math.random(), Math.random(),Math.random(),Math.random()],[Math.random(), Math.random(),Math.random(),Math.random()]]);
+    const [speeds, _] = useState(shuffle([1,1.15,1.3,1.45,1.6]));
+    const [turtleEase, setTurtleEase] = useState([[Math.random(), Math.random(),Math.random(),Math.random()],
+                                                    [Math.random(), Math.random(),Math.random(),Math.random()],
+                                                    [Math.random(), Math.random(),Math.random(),Math.random()],
+                                                    [Math.random(), Math.random(),Math.random(),Math.random()],
+                                                    [Math.random(), Math.random(),Math.random(),Math.random()]]);
     const [started, setStarted] = useState(false);
     const [finished, setFinished] = useState(false);
 
@@ -61,7 +67,7 @@ export default function Home() {
 
     return (
         <div className="flex items-center justify-center w-screen h-screen font-black text-red-500 bg-cover text-7xl bg-background">
-            <div className="relative flex items-center justify-center w-full h-full">
+            <div className="relative flex items-center justify-center w-full h-full pb-64">
                 {turtles.map((turtle, index) => (
                     <div key={index} className="absolute left-0 w-32" style={{transform:`translateY(${100*index}px)`}}>
                         <div className="flex w-full transition-all ease-race1" style={{transform: `translateX(${width-100}px)`, transitionDuration: `${speeds[index]*7000}ms`, transitionTimingFunction: `cubic-bezier(${turtleEase[index][0]}, ${turtleEase[index][1]},${turtleEase[index][2]},${turtleEase[index][3]})`}}>
