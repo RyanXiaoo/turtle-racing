@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       backgroundImage: {
         'background': "url('/bg.png')",
+      },
+      transitionTimingFunction: {
+        'race': 'cubic-bezier(0.815, 1.635, 0.485, -0.570)',
       }
     },
   },

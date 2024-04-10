@@ -32,9 +32,24 @@ export default function Home() {
       }
       
 
+    const speedVsPlace = {
+        1: 1,
+        1.2: 2,
+        1.4: 3,
+        1.6: 4
+    }
     const [speeds, _] = useState(shuffle([1,1.2,1.4,1.6]));
-    const [x, setX] = useState(null) 
+    const [turtleEase, setTurtleEase] = useState([[Math.random(), Math.random(),Math.random(),Math.random()],[Math.random(), Math.random(),Math.random(),Math.random()],[Math.random(), Math.random(),Math.random(),Math.random()],[Math.random(), Math.random(),Math.random(),Math.random()]]);
     const [started, setStarted] = useState(false);
+    const [finished, setFinished] = useState(false);
+
+    useEffect(() => {
+        if (started){
+            setTimeout(() => {
+                setFinished(true)
+            }, 11000)
+        }
+    }, [started])
 
     const windowWidth = useWindowWidth();
     const [width, setWidth] = useState(0);
@@ -49,7 +64,10 @@ export default function Home() {
             <div className="relative flex items-center justify-center w-full h-full">
                 {turtles.map((turtle, index) => (
                     <div key={index} className="absolute left-0 w-32" style={{transform:`translateY(${100*index}px)`}}>
-                        <Image src={turtle} alt={"turtle " + index} className="w-full transition-all ease-linear" style={{transform: `translateX(${width-100}px)`, transitionDuration: `${speeds[index]*3000}ms`}}/>
+                        <div className="flex w-full transition-all ease-race1" style={{transform: `translateX(${width-100}px)`, transitionDuration: `${speeds[index]*7000}ms`, transitionTimingFunction: `cubic-bezier(${turtleEase[index][0]}, ${turtleEase[index][1]},${turtleEase[index][2]},${turtleEase[index][3]})`}}>
+                            <Image src={turtle} alt={"turtle " + index}/>
+                            <h1 className={"-translate-x-48 opacity-0 " + (finished && 'opacity-100')}>{speedVsPlace[speeds[index]]}</h1>
+                        </div>
                     </div>
                 ))}
             </div>
